@@ -11,6 +11,10 @@ function iniciarTareasProgramadas() {
     // Cada día a las 9:00 am: revisar fiados por vencer
     cron.schedule('0 9 * * *', () => NotificacionesService.recordatorioFiados());
 
+    const { hacerBackup } = require('./services/backupService');
+    // ... dentro de iniciarTareasProgramadas():
+    cron.schedule('0 23 * * *', () => hacerBackup()); // todos los días a las 11pm
+
     console.log('Tareas programadas iniciadas.');
 }
 

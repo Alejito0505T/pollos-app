@@ -8,7 +8,7 @@ router.delete('/:id', verificarToken, soloDueno, ClienteController.eliminar);
 router.get('/', ClienteController.listar);
 router.get('/:id', ClienteController.obtenerUno);
 router.post('/', reglasCliente, validar, ClienteController.crear);
-router.put('/:id', reglasCliente, validar, ClienteController.actualizar);
+router.put('/:id', verificarToken, soloDueno, reglasCliente, validar, ClienteController.actualizar);
 
 
 module.exports = router;
