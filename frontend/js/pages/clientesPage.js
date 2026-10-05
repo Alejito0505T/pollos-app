@@ -12,10 +12,13 @@ async function cargarClientes() {
 }
 
 async function eliminarCliente(id) {
-    if (!confirm('¿Eliminar este cliente?')) return;
+    const confirmado = await confirmarAccion('¿Eliminar este cliente?');
+    if (!confirmado) return;
+
     try {
         await ClienteService.eliminar(id);
-        cargarClientes();
+        mostrarAlerta('Cliente eliminado.', 'exito');
+        cargarClientes(); // o la función que recarga la lista, usa el nombre real que tengas
     } catch (error) {
         mostrarAlerta(error.message, 'error');
     }

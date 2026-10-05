@@ -99,3 +99,44 @@ input, select { padding: 10px; border: 1px solid var(--color-borde); border-radi
 
 .toast-exito { background: #16a34a; }
 .toast-error { background: #dc2626; }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal-confirmar {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-confirmar p {
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-cancelar, .btn-confirmar {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-cancelar { background: #e5e7eb; color: #111; }
+.btn-confirmar { background: #dc2626; color: white; }

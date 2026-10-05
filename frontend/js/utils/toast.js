@@ -18,3 +18,29 @@ function crearContenedor() {
     document.body.appendChild(div);
     return div;
 }
+
+function confirmarAccion(mensaje) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `
+            <div class="modal-confirmar">
+                <p>${mensaje}</p>
+                <div class="modal-botones">
+                    <button class="btn-cancelar">Cancelar</button>
+                    <button class="btn-confirmar">Eliminar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        overlay.querySelector('.btn-cancelar').onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+        overlay.querySelector('.btn-confirmar').onclick = () => {
+            overlay.remove();
+            resolve(true);
+        };
+    });
+}
