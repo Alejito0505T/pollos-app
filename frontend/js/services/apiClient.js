@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://pollos-app.onrender.com/api';
 
 async function apiRequest(endpoint, metodo = 'GET', body = null) {
     const token = localStorage.getItem('token');
