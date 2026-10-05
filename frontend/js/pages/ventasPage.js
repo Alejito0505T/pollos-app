@@ -36,12 +36,12 @@ document.getElementById('form-venta').addEventListener('submit', async (e) => {
             precio_lb: document.getElementById('input-precio').value,
             es_fiado: document.getElementById('input-fiado').checked
         });
-        alert('Venta registrada exitosamente.');
+        mostrarAlerta('Venta registrada correctamente.', 'exito');
         e.target.reset();
         document.getElementById('total-preview').textContent = '';
         cargarVentasRecientes();
     } catch (error) {
-        alert('Error: ' + error.message);
+        mostrarAlerta(error.message, 'error');
     }
 });
 

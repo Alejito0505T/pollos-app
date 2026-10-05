@@ -22,10 +22,10 @@ async function registrarAbono(fiadoId, saldoPendiente) {
     if (!monto) return;
     try {
         await FiadoService.abonar(fiadoId, parseFloat(monto));
-        alert('Abono registrado.');
+        mostrarAlerta('Abono registrado.', 'exito');
         cargarFiados();
     } catch (error) {
-        alert('Error: ' + error.message);
+        mostrarAlerta(error.message, 'error');
     }
 }
 

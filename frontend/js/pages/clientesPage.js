@@ -17,7 +17,7 @@ async function eliminarCliente(id) {
         await ClienteService.eliminar(id);
         cargarClientes();
     } catch (error) {
-        alert('Error: ' + error.message);
+        mostrarAlerta(error.message, 'error');
     }
 }
 
@@ -29,11 +29,11 @@ document.getElementById('form-cliente').addEventListener('submit', async (e) => 
             telefono: document.getElementById('input-telefono').value,
             email: document.getElementById('input-email').value
         });
-        alert('Cliente registrado.');
+        mostrarAlerta('Cliente registrado.', 'exito');
         e.target.reset();
         cargarClientes();
     } catch (error) {
-        alert('Error: ' + error.message);
+        mostrarAlerta(error.message, 'error');
     }
 });
 
