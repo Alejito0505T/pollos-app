@@ -1,4 +1,11 @@
 const VentaService = {
-    listar: () => apiRequest('/ventas'),
-    crear: (datos) => apiRequest('/ventas', 'POST', datos)
+    async listar() {
+        return apiRequest('/ventas', 'GET');
+    },
+    async crear(datos) {
+        return apiRequest('/ventas', 'POST', datos);
+    },
+    async actualizar(id, datos) {
+        return apiRequest(`/ventas/${id}`, 'PUT', datos);
+    }
 };

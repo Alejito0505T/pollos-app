@@ -42,3 +42,11 @@ class VentaModel {
 }
 
 module.exports = VentaModel;
+async function actualizar(id, datos) {
+    const { cliente_id, peso_lb, precio_lb } = datos;
+    const [resultado] = await pool.query(
+        'UPDATE ventas SET cliente_id = ?, peso_lb = ?, precio_lb = ? WHERE id = ?',
+        [cliente_id, peso_lb, precio_lb, id]
+    );
+    return resultado.affectedRows > 0;
+}

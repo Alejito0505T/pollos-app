@@ -18,3 +18,15 @@ class VentaController {
 }
 
 module.exports = VentaController;
+
+async function actualizar(req, res, next) {
+    try {
+        const actualizado = await VentaModel.actualizar(req.params.id, req.body);
+        if (!actualizado) {
+            return res.status(404).json({ ok: false, mensaje: 'Venta no encontrada.' });
+        }
+        res.json({ ok: true, mensaje: 'Venta actualizada.' });
+    } catch (error) {
+        next(error);
+    }
+}

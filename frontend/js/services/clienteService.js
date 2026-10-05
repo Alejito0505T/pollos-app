@@ -1,5 +1,5 @@
-const ClienteService = {
-    listar: () => apiRequest('/clientes'),
-    crear: (datos) => apiRequest('/clientes', 'POST', datos),
-    eliminar: (id) => apiRequest(`/clientes/${id}`, 'DELETE')
+const VentaService = {
+    listar: () => apiRequest('/ventas'),
+    crear: (datos) => apiRequest('/ventas', 'POST', datos),
+    actualizar: (id, datos) => apiRequest(`/ventas/${id}`, 'PUT', datos)
 };

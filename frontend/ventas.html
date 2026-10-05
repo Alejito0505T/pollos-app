@@ -21,11 +21,23 @@
             <label>Cliente</label>
             <select id="select-cliente" required></select>
 
-            <label>Peso (lb)</label>
-            <input type="number" id="input-peso" step="0.01" min="0.1" required>
+            <div style="margin:12px 0;">
+                <label><input type="radio" name="modo-venta" value="libra" checked> Por libra</label>
+                <label style="margin-left:16px;"><input type="radio" name="modo-venta" value="directo"> Precio directo</label>
+            </div>
 
-            <label>Precio por libra</label>
-            <input type="number" id="input-precio" step="0.01" min="0.1" required>
+            <div id="campos-libra">
+                <label>Peso (lb)</label>
+                <input type="number" id="input-peso" step="0.01" min="0.1">
+
+                <label>Precio por libra</label>
+                <input type="number" id="input-precio" step="0.01" min="0.1">
+            </div>
+
+            <div id="campos-directo" style="display:none;">
+                <label>Precio total ($)</label>
+                <input type="number" id="input-precio-total" step="0.01" min="0.1" placeholder="Ej: 60000">
+            </div>
 
             <label>
                 <input type="checkbox" id="input-fiado">
@@ -40,7 +52,7 @@
         <h3 style="margin-top:30px;">Ventas recientes</h3>
         <table>
             <thead>
-                <tr><th>Cliente</th><th>Peso</th><th>Precio/lb</th><th>Total</th><th>Tipo</th></tr>
+                <tr><th>Cliente</th><th>Peso</th><th>Precio/lb</th><th>Total</th><th>Tipo</th><th>Acción</th></tr>
             </thead>
             <tbody id="tabla-ventas"></tbody>
         </table>
