@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pollos - Fiados</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo">🐔 Pollos App</span>
+        <a href="index.html">Dashboard</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="fiados.html">Fiados</a>
+    </nav>
+
+    <div class="contenedor">
+        <h2>Fiados pendientes</h2>
+        <table>
+            <thead>
+                <tr><th>Cliente</th><th>Total</th><th>Abonado</th><th>Saldo</th><th>Vence</th><th>Estado</th><th>Acción</th></tr>
+            </thead>
+            <tbody id="tabla-fiados"></tbody>
+        </table>
+    </div>
+
+    <script src="js/services/apiClient.js"></script>
+    <script src="js/services/fiadoService.js"></script>
+    <script src="js/pages/fiadosPage.js"></script>
+</body>
+</html>

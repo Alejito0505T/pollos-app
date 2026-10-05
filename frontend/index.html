@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pollos - Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo">🐔 Pollos App</span>
+        <a href="index.html">Dashboard</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="fiados.html">Fiados</a>
+    </nav>
+
+    <div class="contenedor">
+        <h2>Resumen general</h2>
+
+        <div class="tarjetas">
+            <div class="tarjeta">
+                <div class="valor" id="stat-ventas-hoy">—</div>
+                <div class="etiqueta">Ventas de hoy</div>
+            </div>
+            <div class="tarjeta">
+                <div class="valor" id="stat-total-hoy">—</div>
+                <div class="etiqueta">Total vendido hoy</div>
+            </div>
+            <div class="tarjeta">
+                <div class="valor" id="stat-stock">—</div>
+                <div class="etiqueta">Pollos en stock</div>
+            </div>
+            <div class="tarjeta">
+                <div class="valor" id="stat-cartera">—</div>
+                <div class="etiqueta">Cartera pendiente</div>
+            </div>
+        </div>
+
+        <h3>Últimas ventas</h3>
+        <table>
+            <thead>
+                <tr><th>Cliente</th><th>Peso (lb)</th><th>Total</th><th>Fecha</th></tr>
+            </thead>
+            <tbody id="tabla-ventas"></tbody>
+        </table>
+    </div>
+
+    <script src="js/services/apiClient.js"></script>
+    <script src="js/services/ventaService.js"></script>
+    <script src="js/services/fiadoService.js"></script>
+    <script src="js/pages/dashboardPage.js"></script>
+</body>
+</html>

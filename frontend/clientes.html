@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pollos - Clientes</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo">🐔 Pollos App</span>
+        <a href="index.html">Dashboard</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="fiados.html">Fiados</a>
+    </nav>
+
+    <div class="contenedor">
+        <h2>Clientes</h2>
+
+        <form id="form-cliente">
+            <label>Nombre</label>
+            <input type="text" id="input-nombre" required>
+
+            <label>Teléfono</label>
+            <input type="text" id="input-telefono">
+
+            <label>Email (opcional)</label>
+            <input type="email" id="input-email">
+
+            <button type="submit" class="btn">Registrar cliente</button>
+        </form>
+
+        <h3 style="margin-top:30px;">Listado</h3>
+        <table>
+            <thead>
+                <tr><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-clientes"></tbody>
+        </table>
+    </div>
+
+    <script src="js/services/apiClient.js"></script>
+    <script src="js/services/clienteService.js"></script>
+    <script src="js/pages/clientesPage.js"></script>
+</body>
+</html>

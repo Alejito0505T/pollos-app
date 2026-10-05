@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pollos - Registrar Venta</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo">🐔 Pollos App</span>
+        <a href="index.html">Dashboard</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="fiados.html">Fiados</a>
+    </nav>
+
+    <div class="contenedor">
+        <h2>Registrar venta</h2>
+
+        <form id="form-venta">
+            <label>Cliente</label>
+            <select id="select-cliente" required></select>
+
+            <label>Peso (lb)</label>
+            <input type="number" id="input-peso" step="0.01" min="0.1" required>
+
+            <label>Precio por libra</label>
+            <input type="number" id="input-precio" step="0.01" min="0.1" required>
+
+            <label>
+                <input type="checkbox" id="input-fiado">
+                Venta fiada (paga en quincena)
+            </label>
+
+            <div id="total-preview" style="font-size:20px; font-weight:bold;"></div>
+
+            <button type="submit" class="btn">Registrar venta</button>
+        </form>
+
+        <h3 style="margin-top:30px;">Ventas recientes</h3>
+        <table>
+            <thead>
+                <tr><th>Cliente</th><th>Peso</th><th>Precio/lb</th><th>Total</th><th>Tipo</th></tr>
+            </thead>
+            <tbody id="tabla-ventas"></tbody>
+        </table>
+    </div>
+
+    <script src="js/services/apiClient.js"></script>
+    <script src="js/services/clienteService.js"></script>
+    <script src="js/services/ventaService.js"></script>
+    <script src="js/pages/ventasPage.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+:root {
+    --color-primario: #2563eb;
+    --color-fondo: #f8fafc;
+    --color-texto: #1e293b;
+    --color-borde: #e2e8f0;
+    --color-exito: #16a34a;
+    --color-peligro: #dc2626;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+.navbar {
+    display: flex;
+    gap: 20px;
+    padding: 16px 24px;
+    background: white;
+    border-bottom: 1px solid var(--color-borde);
+    align-items: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 500;
+}
+
+.navbar a:hover { color: var(--color-primario); }
+
+.navbar .logo { font-weight: 700; font-size: 18px; margin-right: auto; }
+
+.contenedor { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+
+.tarjeta {
+    background: white;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.tarjeta .valor { font-size: 28px; font-weight: 700; }
+.tarjeta .etiqueta { color: #64748b; font-size: 14px; }
+
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--color-borde); }
+th { background: #f1f5f9; font-size: 13px; text-transform: uppercase; color: #64748b; }
+
+.btn {
+    background: var(--color-primario);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.btn:hover { opacity: 0.9; }
+
+form { display: flex; flex-direction: column; gap: 12px; max-width: 400px; }
+input, select { padding: 10px; border: 1px solid var(--color-borde); border-radius: 8px; }
+
+.badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.badge-pendiente { background: #fef3c7; color: #92400e; }
+.badge-vencido { background: #fee2e2; color: #991b1b; }
+.badge-pagado { background: #dcfce7; color: #166534; }
