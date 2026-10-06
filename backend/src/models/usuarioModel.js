@@ -1,5 +1,6 @@
 const pool = require('../config/database');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 class UsuarioModel {
 
@@ -10,6 +11,16 @@ class UsuarioModel {
 
     static async crear({ nombre, email, password, rol }) {
         const hash = await bcrypt.hash(password, 10);
+        const [resultado] = await pool.query(
+            'INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES (?, ?, ?, ?)',
+            [nombre, email, hash, rol || 'empleado']
+        );
+        return { id: resultado.insertId, nombre, email, rol: rol || 'empleado' };
+    }
+
+    static async crearDesdeGoogle({ nombre, email, rol }) {
+        const passwordAleatoria = crypto.randomBytes(20).toString('hex');
+        const hash = await bcrypt.hash(passwordAleatoria, 10);
         const [resultado] = await pool.query(
             'INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES (?, ?, ?, ?)',
             [nombre, email, hash, rol || 'empleado']
