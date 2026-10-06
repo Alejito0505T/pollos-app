@@ -23,7 +23,6 @@ class VentaModel {
 
         let fiado = null;
         if (es_fiado) {
-            // Vence en 15 días (quincena)
             const [filaFecha] = await pool.query(
                 'SELECT DATE_ADD(CURDATE(), INTERVAL 15 DAY) AS vencimiento'
             );
@@ -39,20 +38,21 @@ class VentaModel {
         const [filaVenta] = await pool.query('SELECT * FROM ventas WHERE id = ?', [ventaId]);
         return { venta: filaVenta[0], fiado };
     }
+
+    static async actualizar(id, datos) {
+        const { cliente_id, peso_lb, precio_lb, fecha } = datos;
+        const [resultado] = await pool.query(
+            'UPDATE ventas SET cliente_id = ?, peso_lb = ?, precio_lb = ?, fecha = ? WHERE id = ?',
+            [cliente_id, peso_lb, precio_lb, fecha, id]
+        );
+        return resultado.affectedRows > 0;
+    }
+
+    static async eliminar(id) {
+        await pool.query('DELETE FROM fiados WHERE venta_id = ?', [id]);
+        const [resultado] = await pool.query('DELETE FROM ventas WHERE id = ?', [id]);
+        return resultado.affectedRows > 0;
+    }
 }
 
 module.exports = VentaModel;
-
-async function eliminar(id) {
-    const [resultado] = await pool.query('DELETE FROM ventas WHERE id = ?', [id]);
-    return resultado.affectedRows > 0;
-}
-
-async function actualizar(id, datos) {
-    const { cliente_id, peso_lb, precio_lb, fecha } = datos;
-    const [resultado] = await pool.query(
-        'UPDATE ventas SET cliente_id = ?, peso_lb = ?, precio_lb = ?, fecha = ? WHERE id = ?',
-        [cliente_id, peso_lb, precio_lb, fecha, id]
-    );
-    return resultado.affectedRows > 0;
-}
