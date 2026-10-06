@@ -15,18 +15,32 @@ async function cargarDashboard() {
         document.getElementById('stat-cartera').textContent = `$${deudaTotal.toLocaleString()}`;
 
         const tbody = document.getElementById('tabla-ventas');
-        tbody.innerHTML = ventas.slice(0, 10).map(v => `
-            <tr>
-                <td>${v.cliente_nombre}</td>
+        tbody.innerHTML = ventas.slice(0, 10).map((v, i) => `
+            <tr class="fila-venta" id="fila-${i}" onclick="alternarDetalle(${i})">
+                <td><i class="fa-solid fa-chevron-right chevron"></i> ${v.cliente_nombre}</td>
                 <td>${v.peso_lb}</td>
                 <td>$${Number(v.total).toLocaleString()}</td>
                 <td>${new Date(v.fecha).toLocaleDateString()}</td>
-                <td><button type="button" class="btn-editar" style="background:#dc2626;" onclick="eliminarVenta(${v.id})">Eliminar</button></td>
+                <td><button type="button" class="btn-editar" style="background:#dc2626;" onclick="event.stopPropagation(); eliminarVenta(${v.id})">Eliminar</button></td>
+            </tr>
+            <tr class="fila-detalle" id="detalle-${i}">
+                <td colspan="5">
+                    <div class="detalle-contenido">
+                        <p><i class="fa-solid fa-tag"></i> Precio por libra: $${Number(v.precio_lb).toLocaleString()}</p>
+                        <p><i class="fa-solid fa-circle-info"></i> Tipo de venta: ${v.es_fiado ? 'Fiado' : 'Contado'}</p>
+                        <p><i class="fa-solid fa-hashtag"></i> ID de venta: ${v.id}</p>
+                    </div>
+                </td>
             </tr>
         `).join('');
     } catch (error) {
         mostrarAlerta('Error cargando el dashboard: ' + error.message, 'error');
     }
+}
+
+function alternarDetalle(i) {
+    document.getElementById(`fila-${i}`).classList.toggle('abierta');
+    document.getElementById(`detalle-${i}`).classList.toggle('abierta');
 }
 
 async function eliminarVenta(id) {

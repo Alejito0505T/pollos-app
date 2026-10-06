@@ -279,3 +279,51 @@ table tbody tr:nth-child(7) { animation-delay: 0.21s; }
 table tbody tr:nth-child(8) { animation-delay: 0.24s; }
 table tbody tr:nth-child(9) { animation-delay: 0.27s; }
 table tbody tr:nth-child(10) { animation-delay: 0.3s; }
+
+/* Forzar contenido a la izquierda */
+.contenedor {
+    margin-left: 40px;
+    margin-right: auto;
+}
+
+/* Filas expandibles tipo acordeón */
+.fila-venta {
+    cursor: pointer;
+}
+.fila-venta td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.fila-venta .chevron {
+    transition: transform 0.25s ease;
+    color: #94a3b8;
+    font-size: 12px;
+}
+.fila-venta.abierta .chevron {
+    transform: rotate(90deg);
+}
+
+.fila-detalle td {
+    padding: 0;
+    border: none;
+}
+.detalle-contenido {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: #f8fafc;
+    padding: 0 16px;
+}
+.fila-detalle.abierta .detalle-contenido {
+    max-height: 200px;
+    padding: 14px 16px;
+}
+.detalle-contenido p {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #475569;
+    font-size: 14px;
+}
