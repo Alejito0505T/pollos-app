@@ -33,6 +33,9 @@ app.use('/api/ventas', ventaRoutes);
 const fiadoRoutes = require('./src/routes/fiadoRoutes');
 app.use('/api/fiados', fiadoRoutes);
 
+const correoPermitidoRoutes = require('./src/routes/correoPermitidoRoutes');
+app.use('/api/correos-permitidos', correoPermitidoRoutes);
+
 app.use((req, res) => {
     res.status(404).json({ ok: false, mensaje: `La ruta "${req.method} ${req.path}" no existe.` });
 });
