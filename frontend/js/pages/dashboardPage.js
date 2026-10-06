@@ -21,10 +21,24 @@ async function cargarDashboard() {
                 <td>${v.peso_lb}</td>
                 <td>$${Number(v.total).toLocaleString()}</td>
                 <td>${new Date(v.fecha).toLocaleDateString()}</td>
+                <td><button type="button" class="btn-editar" style="background:#dc2626;" onclick="eliminarVenta(${v.id})">Eliminar</button></td>
             </tr>
         `).join('');
     } catch (error) {
-        alert('Error cargando el dashboard: ' + error.message);
+        mostrarAlerta('Error cargando el dashboard: ' + error.message, 'error');
+    }
+}
+
+async function eliminarVenta(id) {
+    const confirmado = await confirmarAccion('¿Eliminar esta venta? Esta acción no se puede deshacer.');
+    if (!confirmado) return;
+
+    try {
+        await VentaService.eliminar(id);
+        mostrarAlerta('Venta eliminada.', 'exito');
+        cargarDashboard();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
     }
 }
 

@@ -42,6 +42,12 @@ class VentaModel {
 }
 
 module.exports = VentaModel;
+
+async function eliminar(id) {
+    const [resultado] = await pool.query('DELETE FROM ventas WHERE id = ?', [id]);
+    return resultado.affectedRows > 0;
+}
+
 async function actualizar(id, datos) {
     const { cliente_id, peso_lb, precio_lb, fecha } = datos;
     const [resultado] = await pool.query(

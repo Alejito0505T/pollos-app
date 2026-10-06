@@ -12,6 +12,8 @@
         <a href="ventas.html">Ventas</a>
         <a href="clientes.html">Clientes</a>
         <a href="fiados.html">Fiados</a>
+        <a href="quincena.html">Quincena</a>
+        <a href="mes.html">Mes</a>
     </nav>
 
     <div class="contenedor">
@@ -39,16 +41,16 @@
         <h3>Últimas ventas</h3>
         <table>
             <thead>
-                <tr><th>Cliente</th><th>Peso (lb)</th><th>Total</th><th>Fecha</th></tr>
+                <tr><th>Cliente</th><th>Peso (lb)</th><th>Total</th><th>Fecha</th><th>Acción</th></tr>
             </thead>
             <tbody id="tabla-ventas"></tbody>
         </table>
     </div>
 
+    <script src="js/utils/toast.js"></script>
     <script src="js/services/apiClient.js"></script>
     <script src="js/services/ventaService.js"></script>
     <script src="js/services/fiadoService.js"></script>
     <script src="js/pages/dashboardPage.js"></script>
-    <script src="js/utils/toast.js"></script>
 </body>
 </html>
