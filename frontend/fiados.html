@@ -7,15 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
+        <nav class="navbar">
+        <button class="btn-hamburguesa" onclick="alternarSidebar()"><i class="fa-solid fa-bars"></i></button>
         <span class="logo">🐔 Pollos App</span>
-        <a href="index.html">Dashboard</a>
-        <a href="ventas.html">Ventas</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="fiados.html">Fiados</a>
-        <a href="quincena.html">Quincena</a>
-        <a href="mes.html">Mes</a>
     </nav>
+
+    <div class="overlay-sidebar" id="overlay-sidebar" onclick="cerrarSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="ventas.html"><i class="fa-solid fa-cart-shopping"></i> Ventas</a>
+        <a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes</a>
+        <a href="fiados.html"><i class="fa-solid fa-hand-holding-dollar"></i> Fiados</a>
+        <a href="quincena.html"><i class="fa-solid fa-calendar-week"></i> Quincena</a>
+        <a href="mes.html"><i class="fa-solid fa-calendar-days"></i> Mes</a>
+    </aside>
 
     <div class="contenedor">
         <h2><i class="fa-solid fa-hand-holding-dollar"></i> Fiados pendientes</h2>
@@ -35,6 +40,7 @@
         </table>
     </div>
 
+    <script src="js/utils/sidebar.js"></script>
     <script src="js/utils/toast.js"></script>
     <script src="js/services/apiClient.js"></script>
     <script src="js/services/fiadoService.js"></script>
