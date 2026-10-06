@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Pollos - Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -17,31 +18,53 @@
     </nav>
 
     <div class="contenedor">
-        <h2>Resumen general</h2>
+        <h2><i class="fa-solid fa-chart-line"></i> Resumen general</h2>
 
         <div class="tarjetas">
             <div class="tarjeta">
-                <div class="valor" id="stat-ventas-hoy">—</div>
-                <div class="etiqueta">Ventas de hoy</div>
+                <div class="tarjeta-icono"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div class="tarjeta-texto">
+                    <div class="valor" id="stat-ventas-hoy">—</div>
+                    <div class="etiqueta">Ventas de hoy</div>
+                    <div class="tarjeta-descripcion">Pollos vendidos en el día</div>
+                </div>
             </div>
             <div class="tarjeta">
-                <div class="valor" id="stat-total-hoy">—</div>
-                <div class="etiqueta">Total vendido hoy</div>
+                <div class="tarjeta-icono"><i class="fa-solid fa-sack-dollar"></i></div>
+                <div class="tarjeta-texto">
+                    <div class="valor" id="stat-total-hoy">—</div>
+                    <div class="etiqueta">Total vendido hoy</div>
+                    <div class="tarjeta-descripcion">Dinero generado hoy</div>
+                </div>
             </div>
             <div class="tarjeta">
-                <div class="valor" id="stat-stock">—</div>
-                <div class="etiqueta">Pollos en stock</div>
+                <div class="tarjeta-icono"><i class="fa-solid fa-drumstick-bite"></i></div>
+                <div class="tarjeta-texto">
+                    <div class="valor" id="stat-stock">—</div>
+                    <div class="etiqueta">Pollos en stock</div>
+                    <div class="tarjeta-descripcion">Disponibles para vender</div>
+                </div>
             </div>
             <div class="tarjeta">
-                <div class="valor" id="stat-cartera">—</div>
-                <div class="etiqueta">Cartera pendiente</div>
+                <div class="tarjeta-icono"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <div class="tarjeta-texto">
+                    <div class="valor" id="stat-cartera">—</div>
+                    <div class="etiqueta">Cartera pendiente</div>
+                    <div class="tarjeta-descripcion">Dinero fiado por cobrar</div>
+                </div>
             </div>
         </div>
 
-        <h3>Últimas ventas</h3>
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> Últimas ventas</h3>
         <table>
             <thead>
-                <tr><th>Cliente</th><th>Peso (lb)</th><th>Total</th><th>Fecha</th><th>Acción</th></tr>
+                <tr>
+                    <th><i class="fa-solid fa-user"></i> Cliente</th>
+                    <th><i class="fa-solid fa-weight-hanging"></i> Peso (lb)</th>
+                    <th><i class="fa-solid fa-dollar-sign"></i> Total</th>
+                    <th><i class="fa-solid fa-calendar-days"></i> Fecha</th>
+                    <th><i class="fa-solid fa-gear"></i> Acción</th>
+                </tr>
             </thead>
             <tbody id="tabla-ventas"></tbody>
         </table>

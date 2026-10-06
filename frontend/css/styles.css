@@ -198,3 +198,84 @@ input, select { padding: 10px; border: 1px solid var(--color-borde); border-radi
         position: static;
     }
 }
+
+/* ===== Mejoras visuales: alineación, animación e iconos ===== */
+
+h2, h3 {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+table th, table td {
+    text-align: left;
+}
+
+.tarjetas {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.tarjeta {
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    opacity: 0;
+    animation: aparecer 0.5s ease forwards;
+}
+
+.tarjeta:nth-child(1) { animation-delay: 0.05s; }
+.tarjeta:nth-child(2) { animation-delay: 0.15s; }
+.tarjeta:nth-child(3) { animation-delay: 0.25s; }
+.tarjeta:nth-child(4) { animation-delay: 0.35s; }
+
+.tarjeta-icono {
+    font-size: 20px;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    color: #4f46e5;
+    flex-shrink: 0;
+}
+
+.tarjeta-texto { text-align: left; }
+
+.tarjeta-descripcion {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+label i { color: #4f46e5; width: 16px; text-align: center; }
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+table tbody tr {
+    opacity: 0;
+    animation: aparecer 0.4s ease forwards;
+}
+table tbody tr:nth-child(1) { animation-delay: 0.03s; }
+table tbody tr:nth-child(2) { animation-delay: 0.06s; }
+table tbody tr:nth-child(3) { animation-delay: 0.09s; }
+table tbody tr:nth-child(4) { animation-delay: 0.12s; }
+table tbody tr:nth-child(5) { animation-delay: 0.15s; }
+table tbody tr:nth-child(6) { animation-delay: 0.18s; }
+table tbody tr:nth-child(7) { animation-delay: 0.21s; }
+table tbody tr:nth-child(8) { animation-delay: 0.24s; }
+table tbody tr:nth-child(9) { animation-delay: 0.27s; }
+table tbody tr:nth-child(10) { animation-delay: 0.3s; }

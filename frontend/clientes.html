@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Pollos - Clientes</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -19,23 +20,28 @@
     <div class="contenedor" style="max-width:1400px;">
         <div class="layout-ventas">
             <div class="col-formulario">
-                <h2>Registrar cliente</h2>
+                <h2><i class="fa-solid fa-user-plus"></i> Registrar cliente</h2>
                 <form id="form-cliente">
-                    <label>Nombre</label>
+                    <label><i class="fa-solid fa-user"></i> Nombre</label>
                     <input type="text" id="input-nombre" required>
-                    <label>Teléfono</label>
+                    <label><i class="fa-solid fa-phone"></i> Teléfono</label>
                     <input type="text" id="input-telefono">
-                    <label>Email</label>
+                    <label><i class="fa-solid fa-envelope"></i> Email</label>
                     <input type="email" id="input-email">
                     <button type="submit" class="btn">Registrar cliente</button>
                 </form>
             </div>
             <div class="col-tabla">
-                <h3>Listado</h3>
+                <h3><i class="fa-solid fa-address-book"></i> Listado</h3>
                 <div class="tabla-scroll">
                     <table>
                         <thead>
-                            <tr><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th></tr>
+                            <tr>
+                                <th><i class="fa-solid fa-user"></i> Nombre</th>
+                                <th><i class="fa-solid fa-phone"></i> Teléfono</th>
+                                <th><i class="fa-solid fa-envelope"></i> Email</th>
+                                <th><i class="fa-solid fa-gear"></i> Acciones</th>
+                            </tr>
                         </thead>
                         <tbody id="tabla-clientes"></tbody>
                     </table>

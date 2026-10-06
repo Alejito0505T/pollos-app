@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Pollos - Fiados</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -17,18 +18,26 @@
     </nav>
 
     <div class="contenedor">
-        <h2>Fiados pendientes</h2>
+        <h2><i class="fa-solid fa-hand-holding-dollar"></i> Fiados pendientes</h2>
         <table>
             <thead>
-                <tr><th>Cliente</th><th>Total</th><th>Abonado</th><th>Saldo</th><th>Vence</th><th>Estado</th><th>Acción</th></tr>
+                <tr>
+                    <th><i class="fa-solid fa-user"></i> Cliente</th>
+                    <th><i class="fa-solid fa-dollar-sign"></i> Total</th>
+                    <th><i class="fa-solid fa-sack-dollar"></i> Abonado</th>
+                    <th><i class="fa-solid fa-scale-balanced"></i> Saldo</th>
+                    <th><i class="fa-solid fa-calendar-days"></i> Vence</th>
+                    <th><i class="fa-solid fa-circle-info"></i> Estado</th>
+                    <th><i class="fa-solid fa-gear"></i> Acción</th>
+                </tr>
             </thead>
             <tbody id="tabla-fiados"></tbody>
         </table>
     </div>
 
+    <script src="js/utils/toast.js"></script>
     <script src="js/services/apiClient.js"></script>
     <script src="js/services/fiadoService.js"></script>
     <script src="js/pages/fiadosPage.js"></script>
-    <script src="js/utils/toast.js"></script>
 </body>
 </html>
