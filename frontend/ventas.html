@@ -14,90 +14,98 @@
         <a href="fiados.html">Fiados</a>
     </nav>
 
-    <div class="contenedor">
-        <h2>Registrar venta</h2>
+    <div class="contenedor" style="max-width:1400px;">
+        <div class="layout-ventas">
+            <div class="col-formulario">
+                <h2>Registrar venta</h2>
 
-        <div id="modal-editar-overlay" class="modal-overlay" style="display:none;">
-    <div class="modal-confirmar" style="max-width:400px; text-align:left;">
-        <h3>Editar venta</h3>
-        <form id="form-editar-venta">
-            <label>Cliente</label>
-            <select id="edit-cliente" required></select>
+                <form id="form-venta">
+                    <label>Cliente</label>
+                    <select id="select-cliente" required></select>
 
-            <label>Fecha</label>
-            <input type="datetime-local" id="edit-fecha" required>
+                    <div style="margin:12px 0;">
+                        <label><input type="radio" name="modo-venta" value="libra" checked> Por libra</label>
+                        <label style="margin-left:16px;"><input type="radio" name="modo-venta" value="directo"> Precio directo</label>
+                    </div>
 
-            <div style="margin:12px 0;">
-                <label><input type="radio" name="edit-modo-venta" value="libra" checked> Por libra</label>
-                <label style="margin-left:16px;"><input type="radio" name="edit-modo-venta" value="directo"> Precio directo</label>
+                    <div id="campos-libra">
+                        <label>Peso (lb)</label>
+                        <input type="number" id="input-peso" step="0.01" min="0.1">
+
+                        <label>Precio por libra</label>
+                        <input type="number" id="input-precio" step="0.01" min="0.1">
+                    </div>
+
+                    <div id="campos-directo" style="display:none;">
+                        <label>Precio total ($)</label>
+                        <input type="number" id="input-precio-total" step="0.01" min="0.1" placeholder="Ej: 60000">
+                    </div>
+
+                    <label>
+                        <input type="checkbox" id="input-fiado">
+                        Venta fiada (paga en quincena)
+                    </label>
+
+                    <div id="total-preview" style="font-size:20px; font-weight:bold;"></div>
+
+                    <button type="submit" class="btn">Registrar venta</button>
+                </form>
             </div>
 
-            <div id="edit-campos-libra">
-                <label>Peso (lb)</label>
-                <input type="number" id="edit-peso" step="0.01" min="0.1">
-
-                <label>Precio por libra</label>
-                <input type="number" id="edit-precio" step="0.01" min="0.1">
+            <div class="col-tabla">
+                <h3>Ventas recientes</h3>
+                <div class="tabla-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>Fecha</th><th>Cliente</th><th>Peso</th><th>Precio/lb</th><th>Total</th><th>Tipo</th><th>Acción</th></tr>
+                        </thead>
+                        <tbody id="tabla-ventas"></tbody>
+                    </table>
+                </div>
             </div>
-
-            <div id="edit-campos-directo" style="display:none;">
-                <label>Precio total ($)</label>
-                <input type="number" id="edit-precio-total" step="0.01" min="0.1">
-            </div>
-
-            <div class="modal-botones" style="margin-top:16px;">
-                <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
-                <button type="submit" class="btn-confirmar" style="background:#2563eb;">Guardar cambios</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-        <form id="form-venta">
-            <label>Cliente</label>
-            <select id="select-cliente" required></select>
-
-            <div style="margin:12px 0;">
-                <label><input type="radio" name="modo-venta" value="libra" checked> Por libra</label>
-                <label style="margin-left:16px;"><input type="radio" name="modo-venta" value="directo"> Precio directo</label>
-            </div>
-
-            <div id="campos-libra">
-                <label>Peso (lb)</label>
-                <input type="number" id="input-peso" step="0.01" min="0.1">
-
-                <label>Precio por libra</label>
-                <input type="number" id="input-precio" step="0.01" min="0.1">
-            </div>
-
-            <div id="campos-directo" style="display:none;">
-                <label>Precio total ($)</label>
-                <input type="number" id="input-precio-total" step="0.01" min="0.1" placeholder="Ej: 60000">
-            </div>
-
-            <label>
-                <input type="checkbox" id="input-fiado">
-                Venta fiada (paga en quincena)
-            </label>
-
-            <div id="total-preview" style="font-size:20px; font-weight:bold;"></div>
-
-            <button type="submit" class="btn">Registrar venta</button>
-        </form>
-
-        <h3 style="margin-top:30px;">Ventas recientes</h3>
-        <table>
-            <thead>
-            <tr><th>Fecha</th><th>Cliente</th><th>Peso</th><th>Precio/lb</th><th>Total</th><th>Tipo</th><th>Acción</th></tr>
-            </thead>
-            <tbody id="tabla-ventas"></tbody>
-        </table>
+        </div>
     </div>
 
+    <div id="modal-editar-overlay" class="modal-overlay" style="display:none;">
+        <div class="modal-confirmar" style="max-width:400px; text-align:left;">
+            <h3>Editar venta</h3>
+            <form id="form-editar-venta">
+                <label>Cliente</label>
+                <select id="edit-cliente" required></select>
+
+                <label>Fecha</label>
+                <input type="datetime-local" id="edit-fecha" required>
+
+                <div style="margin:12px 0;">
+                    <label><input type="radio" name="edit-modo-venta" value="libra" checked> Por libra</label>
+                    <label style="margin-left:16px;"><input type="radio" name="edit-modo-venta" value="directo"> Precio directo</label>
+                </div>
+
+                <div id="edit-campos-libra">
+                    <label>Peso (lb)</label>
+                    <input type="number" id="edit-peso" step="0.01" min="0.1">
+
+                    <label>Precio por libra</label>
+                    <input type="number" id="edit-precio" step="0.01" min="0.1">
+                </div>
+
+                <div id="edit-campos-directo" style="display:none;">
+                    <label>Precio total ($)</label>
+                    <input type="number" id="edit-precio-total" step="0.01" min="0.1">
+                </div>
+
+                <div class="modal-botones" style="margin-top:16px;">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
+                    <button type="submit" class="btn-confirmar" style="background:#2563eb;">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/utils/toast.js"></script>
     <script src="js/services/apiClient.js"></script>
     <script src="js/services/clienteService.js"></script>
     <script src="js/services/ventaService.js"></script>
     <script src="js/pages/ventasPage.js"></script>
-    <script src="js/utils/toast.js"></script>
 </body>
 </html>

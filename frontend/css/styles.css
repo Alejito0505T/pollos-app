@@ -160,3 +160,41 @@ input, select { padding: 10px; border: 1px solid var(--color-borde); border-radi
     transition: background 0.2s;
 }
 .btn-editar:hover { background: #1d4ed8; }
+
+.layout-ventas {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.col-formulario {
+    position: sticky;
+    top: 20px;
+}
+
+.tabla-scroll {
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+.tabla-scroll table {
+    width: 100%;
+}
+
+.tabla-scroll thead th {
+    position: sticky;
+    top: 0;
+    background: #f1f5f9;
+    z-index: 1;
+}
+
+@media (max-width: 900px) {
+    .layout-ventas {
+        grid-template-columns: 1fr;
+    }
+    .col-formulario {
+        position: static;
+    }
+}
