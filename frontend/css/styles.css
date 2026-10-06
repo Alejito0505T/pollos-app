@@ -375,3 +375,16 @@ table tbody tr:nth-child(10) { animation-delay: 0.3s; }
     text-decoration: underline;
     cursor: pointer;
 }
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow-y: auto;
+}
+
+.sidebar-usuario {
+    position: static;
+    margin-top: auto;
+    flex-shrink: 0;
+}
