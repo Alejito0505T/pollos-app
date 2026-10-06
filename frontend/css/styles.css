@@ -140,3 +140,10 @@ input, select { padding: 10px; border: 1px solid var(--color-borde); border-radi
 
 .btn-cancelar { background: #e5e7eb; color: #111; }
 .btn-confirmar { background: #dc2626; color: white; }
+
+#campos-libra label,
+#campos-libra input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}

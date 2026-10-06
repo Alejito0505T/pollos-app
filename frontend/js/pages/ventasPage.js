@@ -11,30 +11,48 @@ async function cargarVentasRecientes() {
     const tbody = document.getElementById('tabla-ventas');
     tbody.innerHTML = ventas.slice(0, 15).map(v => `
         <tr>
+            <td>${new Date(v.fecha).toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' })}</td>
             <td>${v.cliente_nombre}</td>
             <td>${v.peso_lb} lb</td>
             <td>$${Number(v.precio_lb).toLocaleString()}</td>
             <td>$${Number(v.total).toLocaleString()}</td>
             <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : 'Contado'}</td>
-            <td><button type="button" class="btn-editar" onclick="iniciarEdicion(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb})">Editar</button></td>
+            <td><button type="button" class="btn-editar" onclick="abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb})">Editar</button></td>
         </tr>
     `).join('');
 }
 
-function iniciarEdicion(id, clienteId, peso, precio) {
+function abrirModalEditar(id, clienteId, peso, precio) {
     editandoId = id;
-    document.getElementById('select-cliente').value = clienteId;
-    document.querySelector('input[name="modo-venta"][value="libra"]').checked = true;
-    document.getElementById('campos-libra').style.display = 'block';
-    document.getElementById('campos-directo').style.display = 'none';
-    document.getElementById('input-peso').value = peso;
-    document.getElementById('input-precio').value = precio;
-    actualizarPreview();
-
-    const boton = document.querySelector('#form-venta button[type="submit"]');
-    boton.textContent = 'Guardar cambios';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const selectEdit = document.getElementById('edit-cliente');
+    selectEdit.innerHTML = document.getElementById('select-cliente').innerHTML;
+    selectEdit.value = clienteId;
+    document.getElementById('edit-peso').value = peso;
+    document.getElementById('edit-precio').value = precio;
+    document.getElementById('modal-editar-overlay').style.display = 'flex';
 }
+
+function cerrarModalEditar() {
+    document.getElementById('modal-editar-overlay').style.display = 'none';
+    editandoId = null;
+}
+
+document.getElementById('form-editar-venta').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+        const datos = {
+            cliente_id: document.getElementById('edit-cliente').value,
+            peso_lb: document.getElementById('edit-peso').value,
+            precio_lb: document.getElementById('edit-precio').value
+        };
+        await VentaService.actualizar(editandoId, datos);
+        mostrarAlerta('Venta actualizada.', 'exito');
+        cerrarModalEditar();
+        cargarVentasRecientes();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
+    }
+});
 
 function actualizarPreview() {
     const modo = document.querySelector('input[name="modo-venta"]:checked').value;
@@ -84,16 +102,8 @@ document.getElementById('form-venta').addEventListener('submit', async (e) => {
             };
         }
 
-        if (editandoId) {
-            await VentaService.actualizar(editandoId, datosVenta);
-            mostrarAlerta('Venta actualizada.', 'exito');
-            editandoId = null;
-            document.querySelector('#form-venta button[type="submit"]').textContent = 'Registrar venta';
-        } else {
-            await VentaService.crear(datosVenta);
-            mostrarAlerta('Venta registrada correctamente.', 'exito');
-        }
-
+        await VentaService.crear(datosVenta);
+        mostrarAlerta('Venta registrada correctamente.', 'exito');
         e.target.reset();
         document.getElementById('total-preview').textContent = '';
         document.getElementById('campos-libra').style.display = 'block';
