@@ -49,16 +49,17 @@ class VentaModel {
     }
 
     static async eliminar(id) {
-    const [fiados] = await pool.query('SELECT id FROM fiados WHERE venta_id = ?', [id]);
+        const [fiados] = await pool.query('SELECT id FROM fiados WHERE venta_id = ?', [id]);
 
-    if (fiados.length > 0) {
-        const fiadoId = fiados[0].id;
-        await pool.query('DELETE FROM abonos WHERE fiado_id = ?', [fiadoId]);
-        await pool.query('DELETE FROM fiados WHERE id = ?', [fiadoId]);
+        if (fiados.length > 0) {
+            const fiadoId = fiados[0].id;
+            await pool.query('DELETE FROM abonos WHERE fiado_id = ?', [fiadoId]);
+            await pool.query('DELETE FROM fiados WHERE id = ?', [fiadoId]);
+        }
+
+        const [resultado] = await pool.query('DELETE FROM ventas WHERE id = ?', [id]);
+        return resultado.affectedRows > 0;
     }
-
-    const [resultado] = await pool.query('DELETE FROM ventas WHERE id = ?', [id]);
-    return resultado.affectedRows > 0;
 }
 
 module.exports = VentaModel;
