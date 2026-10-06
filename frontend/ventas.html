@@ -39,9 +39,15 @@
                 <form id="form-venta">
                     <label><i class="fa-solid fa-user"></i> Cliente</label>
                     <select id="select-cliente" required></select>
-                    <div style="margin:12px 0;">
-                        <label><input type="radio" name="modo-venta" value="libra" checked> Por libra</label>
-                        <label style="margin-left:16px;"><input type="radio" name="modo-venta" value="directo"> Precio directo</label>
+                    <div class="selector-modo">
+                        <label class="opcion-modo">
+                            <input type="radio" name="modo-venta" value="libra" checked>
+                            <span><i class="fa-solid fa-weight-hanging"></i> Por libra</span>
+                        </label>
+                        <label class="opcion-modo">
+                            <input type="radio" name="modo-venta" value="directo">
+                            <span><i class="fa-solid fa-dollar-sign"></i> Precio directo</span>
+                        </label>
                     </div>
                     <div id="campos-libra">
                         <label><i class="fa-solid fa-weight-hanging"></i> Peso (lb)</label>
@@ -88,9 +94,15 @@
                 <select id="edit-cliente" required></select>
                 <label><i class="fa-solid fa-calendar-days"></i> Fecha</label>
                 <input type="datetime-local" id="edit-fecha" required>
-                <div style="margin:12px 0;">
-                    <label><input type="radio" name="edit-modo-venta" value="libra" checked> Por libra</label>
-                    <label style="margin-left:16px;"><input type="radio" name="edit-modo-venta" value="directo"> Precio directo</label>
+                <div class="selector-modo">
+                    <label class="opcion-modo">
+                        <input type="radio" name="edit-modo-venta" value="libra" checked>
+                        <span><i class="fa-solid fa-weight-hanging"></i> Por libra</span>
+                    </label>
+                    <label class="opcion-modo">
+                        <input type="radio" name="edit-modo-venta" value="directo">
+                        <span><i class="fa-solid fa-dollar-sign"></i> Precio directo</span>
+                    </label>
                 </div>
                 <div id="edit-campos-libra">
                     <label><i class="fa-solid fa-weight-hanging"></i> Peso (lb)</label>

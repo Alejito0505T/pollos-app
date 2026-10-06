@@ -388,3 +388,117 @@ table tbody tr:nth-child(10) { animation-delay: 0.3s; }
     margin-top: auto;
     flex-shrink: 0;
 }
+
+/* Botones con más vida */
+.btn, .btn-editar, button[type="submit"] {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover, .btn-editar:hover, button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    filter: brightness(1.05);
+}
+
+.btn:active, .btn-editar:active, button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Inputs con foco más vivo */
+input, select, textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    outline: none;
+}
+
+/* Tarjetas con hover suave */
+.tarjeta {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Filas de tabla con hover */
+table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(79, 70, 229, 0.05);
+}
+
+/* Badges de estado (Fiado/Contado) con un poco más de forma */
+.badge, td span[class*="fiado"], td span[class*="contado"] {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+/* Animación de entrada para toda la página */
+.contenedor {
+    animation: aparecer 0.4s ease-out;
+}
+/* Selector tipo pastilla para modo de venta */
+.selector-modo {
+    display: flex;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.opcion-modo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.opcion-modo input[type="radio"] {
+    display: none;
+}
+
+.opcion-modo:has(input:checked) {
+    border-color: #4f46e5;
+    background: rgba(79, 70, 229, 0.08);
+    color: #4f46e5;
+}
+
+.opcion-modo:hover {
+    border-color: #a5b4fc;
+}
+
+/* Botones de acción en la tabla, uno junto al otro */
+.acciones-tabla {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-eliminar {
+    background: #dc2626 !important;
+}
+
+.btn-eliminar:hover {
+    background: #b91c1c !important;
+}

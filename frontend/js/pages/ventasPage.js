@@ -17,9 +17,26 @@ async function cargarVentasRecientes() {
             <td>$${Number(v.precio_lb).toLocaleString()}</td>
             <td>$${Number(v.total).toLocaleString()}</td>
             <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : 'Contado'}</td>
-            <td><button type="button" class="btn-editar" onclick='abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb}, "${v.fecha}")'>Editar</button></td>
+            <td>
+                <div class="acciones-tabla">
+                    <button type="button" class="btn-editar" onclick='abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb}, "${v.fecha}")'>Editar</button>
+                    <button type="button" class="btn-editar btn-eliminar" onclick="eliminarVenta(${v.id})">Eliminar</button>
+                </div>
+            </td>
         </tr>
     `).join('');
+}
+
+async function eliminarVenta(id) {
+    const confirmado = await confirmarAccion('¿Eliminar esta venta? Esta acción no se puede deshacer.');
+    if (!confirmado) return;
+    try {
+        await VentaService.eliminar(id);
+        mostrarAlerta('Venta eliminada.', 'exito');
+        cargarVentasRecientes();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
+    }
 }
 
 function formatearFechaInput(fechaISO) {
