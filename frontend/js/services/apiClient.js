@@ -14,6 +14,13 @@ async function apiRequest(endpoint, metodo = 'GET', body = null) {
     const respuesta = await fetch(`${API_URL}${endpoint}`, opciones);
     const datos = await respuesta.json();
 
+    if (respuesta.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('usuario');
+        window.location.href = 'login.html';
+        return;
+    }
+
     if (!respuesta.ok) {
         throw new Error(datos.mensaje || 'Error en la petición.');
     }
