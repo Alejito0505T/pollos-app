@@ -17,18 +17,36 @@ async function cargarVentasRecientes() {
             <td>$${Number(v.precio_lb).toLocaleString()}</td>
             <td>$${Number(v.total).toLocaleString()}</td>
             <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : 'Contado'}</td>
-            <td><button type="button" class="btn-editar" onclick="abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb})">Editar</button></td>
+            <td><button type="button" class="btn-editar" onclick='abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb}, "${v.fecha}")'>Editar</button></td>
         </tr>
     `).join('');
 }
 
-function abrirModalEditar(id, clienteId, peso, precio) {
+function formatearFechaInput(fechaISO) {
+    const d = new Date(fechaISO);
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function abrirModalEditar(id, clienteId, peso, precio, fecha) {
     editandoId = id;
     const selectEdit = document.getElementById('edit-cliente');
     selectEdit.innerHTML = document.getElementById('select-cliente').innerHTML;
     selectEdit.value = clienteId;
-    document.getElementById('edit-peso').value = peso;
-    document.getElementById('edit-precio').value = precio;
+    document.getElementById('edit-fecha').value = formatearFechaInput(fecha);
+
+    const esDirecto = Number(peso) === 1;
+    document.querySelector(`input[name="edit-modo-venta"][value="${esDirecto ? 'directo' : 'libra'}"]`).checked = true;
+    document.getElementById('edit-campos-libra').style.display = esDirecto ? 'none' : 'block';
+    document.getElementById('edit-campos-directo').style.display = esDirecto ? 'block' : 'none';
+
+    if (esDirecto) {
+        document.getElementById('edit-precio-total').value = precio;
+    } else {
+        document.getElementById('edit-peso').value = peso;
+        document.getElementById('edit-precio').value = precio;
+    }
+
     document.getElementById('modal-editar-overlay').style.display = 'flex';
 }
 
@@ -37,14 +55,37 @@ function cerrarModalEditar() {
     editandoId = null;
 }
 
+document.querySelectorAll('input[name="edit-modo-venta"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const esDirecto = document.querySelector('input[name="edit-modo-venta"]:checked').value === 'directo';
+        document.getElementById('edit-campos-libra').style.display = esDirecto ? 'none' : 'block';
+        document.getElementById('edit-campos-directo').style.display = esDirecto ? 'block' : 'none';
+    });
+});
+
 document.getElementById('form-editar-venta').addEventListener('submit', async (e) => {
     e.preventDefault();
     try {
-        const datos = {
-            cliente_id: document.getElementById('edit-cliente').value,
-            peso_lb: document.getElementById('edit-peso').value,
-            precio_lb: document.getElementById('edit-precio').value
-        };
+        const modo = document.querySelector('input[name="edit-modo-venta"]:checked').value;
+        const fechaInput = document.getElementById('edit-fecha').value.replace('T', ' ') + ':00';
+        let datos;
+
+        if (modo === 'directo') {
+            datos = {
+                cliente_id: document.getElementById('edit-cliente').value,
+                peso_lb: 1,
+                precio_lb: document.getElementById('edit-precio-total').value,
+                fecha: fechaInput
+            };
+        } else {
+            datos = {
+                cliente_id: document.getElementById('edit-cliente').value,
+                peso_lb: document.getElementById('edit-peso').value,
+                precio_lb: document.getElementById('edit-precio').value,
+                fecha: fechaInput
+            };
+        }
+
         await VentaService.actualizar(editandoId, datos);
         mostrarAlerta('Venta actualizada.', 'exito');
         cerrarModalEditar();
