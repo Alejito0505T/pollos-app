@@ -24,17 +24,17 @@ async function cargarCompras() {
 
 function actualizarPreviewCompra() {
     const cantidad = parseFloat(document.getElementById('input-cantidad').value) || 0;
-    const costoTotal = parseFloat(document.getElementById('input-costo-total').value) || 0;
+    const costoUnitario = parseFloat(document.getElementById('input-costo-unitario').value) || 0;
     const precioVenta = parseFloat(document.getElementById('input-precio-venta').value) || 0;
     const preview = document.getElementById('compra-preview');
 
-    if (cantidad > 0 && costoTotal > 0) {
-        const costoUnitario = costoTotal / cantidad;
-        let texto = `Costo por pollo: $${costoUnitario.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+    if (cantidad > 0 && costoUnitario > 0) {
+        const costoTotal = costoUnitario * cantidad;
+        let texto = `Costo total de la compra: $${costoTotal.toLocaleString()}`;
         if (precioVenta > 0) {
             const gananciaUnitaria = precioVenta - costoUnitario;
             const gananciaTotal = gananciaUnitaria * cantidad;
-            texto += ` · Ganancia por pollo: $${gananciaUnitaria.toLocaleString(undefined, { maximumFractionDigits: 0 })} · Ganancia total estimada: $${gananciaTotal.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+            texto += ` · Ganancia por pollo: $${gananciaUnitaria.toLocaleString()} · Ganancia total estimada: $${gananciaTotal.toLocaleString()}`;
         }
         preview.textContent = texto;
     } else {
@@ -43,7 +43,7 @@ function actualizarPreviewCompra() {
 }
 
 document.getElementById('input-cantidad').addEventListener('input', actualizarPreviewCompra);
-document.getElementById('input-costo-total').addEventListener('input', actualizarPreviewCompra);
+document.getElementById('input-costo-unitario').addEventListener('input', actualizarPreviewCompra);
 document.getElementById('input-precio-venta').addEventListener('input', actualizarPreviewCompra);
 
 document.getElementById('form-proveedor').addEventListener('submit', async (e) => {
@@ -65,10 +65,13 @@ document.getElementById('form-proveedor').addEventListener('submit', async (e) =
 document.getElementById('form-compra').addEventListener('submit', async (e) => {
     e.preventDefault();
     try {
+        const cantidad = Number(document.getElementById('input-cantidad').value);
+        const costoUnitario = Number(document.getElementById('input-costo-unitario').value) || 0;
+
         await InventarioService.crear({
             proveedor_id: document.getElementById('select-proveedor').value || null,
-            cantidad_pollos: document.getElementById('input-cantidad').value,
-            costo_total: document.getElementById('input-costo-total').value || null,
+            cantidad_pollos: cantidad,
+            costo_total: costoUnitario > 0 ? costoUnitario * cantidad : null,
             fecha_ingreso: document.getElementById('input-fecha').value
         });
         mostrarAlerta('Compra registrada.', 'exito');
