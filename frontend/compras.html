@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="js/utils/authGuard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollos - Compras</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <button class="btn-hamburguesa" onclick="alternarSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <span class="logo">🐔 Pollos App</span>
+    </nav>
+
+    <div class="overlay-sidebar" id="overlay-sidebar" onclick="cerrarSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="ventas.html"><i class="fa-solid fa-cart-shopping"></i> Ventas</a>
+        <a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes</a>
+        <a href="fiados.html"><i class="fa-solid fa-hand-holding-dollar"></i> Fiados</a>
+        <a href="quincena.html"><i class="fa-solid fa-calendar-week"></i> Quincena</a>
+        <a href="mes.html"><i class="fa-solid fa-calendar-days"></i> Mes</a>
+        <a href="compras.html"><i class="fa-solid fa-truck"></i> Compras</a>
+
+        <div class="sidebar-usuario">
+            <i class="fa-solid fa-circle-user"></i>
+            <div class="sidebar-usuario-info">
+                <span id="sidebar-usuario-nombre">Cargando...</span>
+                <a href="#" id="sidebar-cerrar-sesion">Cerrar sesión</a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="contenedor" style="max-width:1400px;">
+        <div class="layout-ventas">
+            <div class="col-formulario">
+                <h2><i class="fa-solid fa-truck"></i> Registrar compra</h2>
+                <form id="form-compra">
+                    <label><i class="fa-solid fa-user-tie"></i> Proveedor</label>
+                    <select id="select-proveedor"></select>
+
+                    <label><i class="fa-solid fa-drumstick-bite"></i> Cantidad de pollos</label>
+                    <input type="number" id="input-cantidad" min="1" required>
+
+                    <label><i class="fa-solid fa-dollar-sign"></i> Costo total de la compra ($)</label>
+                    <input type="number" id="input-costo-total" min="0" step="100" placeholder="Ej: 450000">
+
+                    <label><i class="fa-solid fa-calendar-days"></i> Fecha</label>
+                    <input type="date" id="input-fecha" required>
+
+                    <label><i class="fa-solid fa-tag"></i> Precio al que piensas vender cada uno (opcional)</label>
+                    <input type="number" id="input-precio-venta" min="0" step="100" placeholder="Ej: 60000">
+
+                    <div id="compra-preview" class="total-preview"></div>
+
+                    <button type="submit" class="btn">Registrar compra</button>
+                </form>
+
+                <h3 style="margin-top:28px;"><i class="fa-solid fa-user-plus"></i> Agregar proveedor nuevo</h3>
+                <form id="form-proveedor">
+                    <label><i class="fa-solid fa-user-tie"></i> Nombre</label>
+                    <input type="text" id="input-prov-nombre" required>
+
+                    <label><i class="fa-solid fa-phone"></i> Teléfono</label>
+                    <input type="text" id="input-prov-telefono">
+
+                    <label><i class="fa-solid fa-tag"></i> Precio de compra por libra</label>
+                    <input type="number" id="input-prov-precio" min="0.01" step="0.01" required>
+
+                    <button type="submit" class="btn" style="background:#4b5563;">Agregar proveedor</button>
+                </form>
+            </div>
+
+            <div class="col-tabla">
+                <h3><i class="fa-solid fa-list"></i> Compras recientes</h3>
+                <div class="tabla-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fa-solid fa-calendar-days"></i> Fecha</th>
+                                <th><i class="fa-solid fa-user-tie"></i> Proveedor</th>
+                                <th><i class="fa-solid fa-drumstick-bite"></i> Cantidad</th>
+                                <th><i class="fa-solid fa-dollar-sign"></i> Costo total</th>
+                                <th><i class="fa-solid fa-tag"></i> Costo/pollo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-compras"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/sidebar.js"></script>
+    <script src="js/utils/toast.js"></script>
+    <script src="js/services/apiClient.js"></script>
+    <script src="js/services/proveedorService.js"></script>
+    <script src="js/services/inventarioService.js"></script>
+    <script src="js/pages/comprasPage.js"></script>
+</body>
+</html>

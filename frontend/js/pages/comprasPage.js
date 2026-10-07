@@ -1,0 +1,86 @@
+async function cargarProveedoresEnSelect() {
+    const { datos: proveedores } = await ProveedorService.listar();
+    const select = document.getElementById('select-proveedor');
+    select.innerHTML = '<option value="">Sin proveedor</option>' +
+        proveedores.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
+}
+
+async function cargarCompras() {
+    const { datos: compras } = await InventarioService.listar();
+    const tbody = document.getElementById('tabla-compras');
+    tbody.innerHTML = compras.slice(0, 20).map(c => {
+        const costoUnitario = (c.costo_total && c.cantidad_pollos) ? (c.costo_total / c.cantidad_pollos) : null;
+        return `
+            <tr>
+                <td>${new Date(c.fecha_ingreso).toLocaleDateString()}</td>
+                <td>${c.proveedor_nombre || '—'}</td>
+                <td>${c.cantidad_pollos}</td>
+                <td>${c.costo_total ? '$' + Number(c.costo_total).toLocaleString() : '—'}</td>
+                <td>${costoUnitario ? '$' + Math.round(costoUnitario).toLocaleString() : '—'}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function actualizarPreviewCompra() {
+    const cantidad = parseFloat(document.getElementById('input-cantidad').value) || 0;
+    const costoTotal = parseFloat(document.getElementById('input-costo-total').value) || 0;
+    const precioVenta = parseFloat(document.getElementById('input-precio-venta').value) || 0;
+    const preview = document.getElementById('compra-preview');
+
+    if (cantidad > 0 && costoTotal > 0) {
+        const costoUnitario = costoTotal / cantidad;
+        let texto = `Costo por pollo: $${costoUnitario.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+        if (precioVenta > 0) {
+            const gananciaUnitaria = precioVenta - costoUnitario;
+            const gananciaTotal = gananciaUnitaria * cantidad;
+            texto += ` · Ganancia por pollo: $${gananciaUnitaria.toLocaleString(undefined, { maximumFractionDigits: 0 })} · Ganancia total estimada: $${gananciaTotal.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+        }
+        preview.textContent = texto;
+    } else {
+        preview.textContent = '';
+    }
+}
+
+document.getElementById('input-cantidad').addEventListener('input', actualizarPreviewCompra);
+document.getElementById('input-costo-total').addEventListener('input', actualizarPreviewCompra);
+document.getElementById('input-precio-venta').addEventListener('input', actualizarPreviewCompra);
+
+document.getElementById('form-proveedor').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+        await ProveedorService.crear({
+            nombre: document.getElementById('input-prov-nombre').value,
+            telefono: document.getElementById('input-prov-telefono').value,
+            precio_compra_lb: document.getElementById('input-prov-precio').value
+        });
+        mostrarAlerta('Proveedor agregado.', 'exito');
+        e.target.reset();
+        cargarProveedoresEnSelect();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
+    }
+});
+
+document.getElementById('form-compra').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+        await InventarioService.crear({
+            proveedor_id: document.getElementById('select-proveedor').value || null,
+            cantidad_pollos: document.getElementById('input-cantidad').value,
+            costo_total: document.getElementById('input-costo-total').value || null,
+            fecha_ingreso: document.getElementById('input-fecha').value
+        });
+        mostrarAlerta('Compra registrada.', 'exito');
+        e.target.reset();
+        document.getElementById('input-fecha').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('compra-preview').textContent = '';
+        cargarCompras();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
+    }
+});
+
+document.getElementById('input-fecha').value = new Date().toISOString().slice(0, 10);
+cargarProveedoresEnSelect();
+cargarCompras();

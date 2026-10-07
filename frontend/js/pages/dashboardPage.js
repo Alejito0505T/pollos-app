@@ -6,7 +6,9 @@ async function cargarDashboard() {
 
         const hoy = new Date().toISOString().slice(0, 10);
         const ventasHoy = ventas.filter(v => v.fecha.slice(0, 10) === hoy);
-        const totalHoy = ventasHoy.reduce((suma, v) => suma + Number(v.total), 0);
+        const totalHoy = ventasHoy
+            .filter(v => !v.es_fiado)
+            .reduce((suma, v) => suma + Number(v.total), 0);
         const deudaTotal = cartera.reduce((suma, c) => suma + Number(c.deuda_total), 0);
 
         document.getElementById('stat-ventas-hoy').textContent = ventasHoy.length;
@@ -21,6 +23,7 @@ async function cargarDashboard() {
                 <td>${v.peso_lb}</td>
                 <td>$${Number(v.total).toLocaleString()}</td>
                 <td>${new Date(v.fecha).toLocaleDateString()}</td>
+                <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : '<span class="badge badge-pagado">Contado</span>'}</td>
                 <td><button type="button" class="btn-editar" style="background:#dc2626;" onclick="eliminarVenta(${v.id})">Eliminar</button></td>
             </tr>
         `).join('');
