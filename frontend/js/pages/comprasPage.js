@@ -27,7 +27,6 @@ function actualizarPreviewCompra() {
     const costoUnitario = parseFloat(document.getElementById('input-costo-unitario').value) || 0;
     const precioVenta = parseFloat(document.getElementById('input-precio-venta').value) || 0;
     const preview = document.getElementById('compra-preview');
-
     if (cantidad > 0 && costoUnitario > 0) {
         const costoTotal = costoUnitario * cantidad;
         let texto = `Costo total de la compra: $${costoTotal.toLocaleString()}`;
@@ -68,10 +67,15 @@ document.getElementById('form-compra').addEventListener('submit', async (e) => {
         const cantidad = Number(document.getElementById('input-cantidad').value);
         const costoUnitario = Number(document.getElementById('input-costo-unitario').value) || 0;
 
+        if (costoUnitario <= 0) {
+            mostrarAlerta('Debes ingresar el costo por pollo para poder calcular el total.', 'error');
+            return;
+        }
+
         await InventarioService.crear({
             proveedor_id: document.getElementById('select-proveedor').value || null,
             cantidad_pollos: cantidad,
-            costo_total: costoUnitario > 0 ? costoUnitario * cantidad : null,
+            costo_total: costoUnitario * cantidad,
             fecha_ingreso: document.getElementById('input-fecha').value
         });
         mostrarAlerta('Compra registrada.', 'exito');
