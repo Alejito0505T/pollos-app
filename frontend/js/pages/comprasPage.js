@@ -18,8 +18,8 @@ async function cargarCompras() {
                 <td>${c.costo_total ? '$' + Number(c.costo_total).toLocaleString() : '—'}</td>
                 <td>${costoUnitario ? '$' + Math.round(costoUnitario).toLocaleString() : '—'}</td>
                 <td>
-                    <button type="button" class="btn-eliminar" onclick="eliminarCompra(${c.id})">
-                        <i class="fa-solid fa-trash"></i>
+                    <button type="button" class="btn-editar" style="background:#dc2626;" onclick="eliminarCompra(${c.id})">
+                        <i class="fa-solid fa-trash"></i> Eliminar
                     </button>
                 </td>
             </tr>
@@ -28,15 +28,16 @@ async function cargarCompras() {
 }
 
 async function eliminarCompra(id) {
-    confirmarAccion('¿Eliminar esta compra? Esta acción no se puede deshacer.', async () => {
-        try {
-            await InventarioService.eliminar(id);
-            mostrarAlerta('Compra eliminada.', 'exito');
-            cargarCompras();
-        } catch (error) {
-            mostrarAlerta(error.message, 'error');
-        }
-    });
+    const confirmado = await confirmarAccion('¿Eliminar esta compra? Esta acción no se puede deshacer.');
+    if (!confirmado) return;
+
+    try {
+        await InventarioService.eliminar(id);
+        mostrarAlerta('Compra eliminada.', 'exito');
+        cargarCompras();
+    } catch (error) {
+        mostrarAlerta(error.message, 'error');
+    }
 }
 
 function actualizarPreviewCompra() {
