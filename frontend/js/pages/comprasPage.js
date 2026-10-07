@@ -17,9 +17,26 @@ async function cargarCompras() {
                 <td>${c.cantidad_pollos}</td>
                 <td>${c.costo_total ? '$' + Number(c.costo_total).toLocaleString() : '—'}</td>
                 <td>${costoUnitario ? '$' + Math.round(costoUnitario).toLocaleString() : '—'}</td>
+                <td>
+                    <button type="button" class="btn-eliminar" onclick="eliminarCompra(${c.id})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
             </tr>
         `;
     }).join('');
+}
+
+async function eliminarCompra(id) {
+    confirmarAccion('¿Eliminar esta compra? Esta acción no se puede deshacer.', async () => {
+        try {
+            await InventarioService.eliminar(id);
+            mostrarAlerta('Compra eliminada.', 'exito');
+            cargarCompras();
+        } catch (error) {
+            mostrarAlerta(error.message, 'error');
+        }
+    });
 }
 
 function actualizarPreviewCompra() {
