@@ -514,3 +514,46 @@ table tbody tr:hover {
     color: #4f46e5;
     margin: 10px 0;
 }
+
+.combo-cliente {
+    position: relative;
+}
+
+.lista-clientes {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 220px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    z-index: 50;
+    margin-top: 4px;
+}
+
+.lista-clientes.visible {
+    display: block;
+}
+
+.opcion-cliente {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.opcion-cliente:hover {
+    background: rgba(79, 70, 229, 0.08);
+}
+
+.opcion-cliente-vacia {
+    color: #9ca3af;
+    cursor: default;
+}
+
+.opcion-cliente-vacia:hover {
+    background: none;
+}

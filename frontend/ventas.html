@@ -39,7 +39,11 @@
                 <h2><i class="fa-solid fa-plus"></i> Registrar venta</h2>
                 <form id="form-venta">
                     <label><i class="fa-solid fa-user"></i> Cliente</label>
-                    <select id="select-cliente" required></select>
+                    <div class="combo-cliente">
+                        <input type="text" id="buscar-cliente" placeholder="Escribe para buscar..." autocomplete="off" required>
+                        <input type="hidden" id="select-cliente">
+                    <div class="lista-clientes" id="lista-clientes"></div>
+                </div>
                     <div class="selector-modo">
                         <label class="opcion-modo">
                             <input type="radio" name="modo-venta" value="libra" checked>

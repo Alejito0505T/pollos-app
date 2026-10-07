@@ -1,10 +1,49 @@
 let editandoId = null;
+let clientesCache = [];
 
 async function cargarClientesEnSelect() {
     const { datos: clientes } = await ClienteService.listar();
-    const select = document.getElementById('select-cliente');
-    select.innerHTML = clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+    clientesCache = clientes;
+    document.getElementById('edit-cliente').innerHTML = clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
 }
+
+function renderListaClientes(filtro = '') {
+    const lista = document.getElementById('lista-clientes');
+    const texto = filtro.trim().toLowerCase();
+    const filtrados = texto
+        ? clientesCache.filter(c => c.nombre.toLowerCase().includes(texto))
+        : clientesCache;
+
+    lista.innerHTML = filtrados.length
+        ? filtrados.map(c => `<div class="opcion-cliente" data-id="${c.id}">${c.nombre}</div>`).join('')
+        : '<div class="opcion-cliente opcion-cliente-vacia">Sin resultados</div>';
+
+    lista.classList.add('visible');
+}
+
+document.getElementById('buscar-cliente').addEventListener('input', (e) => {
+    document.getElementById('select-cliente').value = '';
+    renderListaClientes(e.target.value);
+});
+
+document.getElementById('buscar-cliente').addEventListener('focus', (e) => {
+    renderListaClientes(e.target.value);
+});
+
+document.getElementById('lista-clientes').addEventListener('click', (e) => {
+    const opcion = e.target.closest('.opcion-cliente[data-id]');
+    if (!opcion) return;
+    document.getElementById('select-cliente').value = opcion.dataset.id;
+    document.getElementById('buscar-cliente').value = opcion.textContent;
+    document.getElementById('lista-clientes').classList.remove('visible');
+});
+
+document.addEventListener('click', (e) => {
+    const combo = document.getElementById('buscar-cliente').closest('.combo-cliente');
+    if (combo && !combo.contains(e.target)) {
+        document.getElementById('lista-clientes').classList.remove('visible');
+    }
+});
 
 async function cargarVentasRecientes() {
     const { datos: ventas } = await VentaService.listar();
@@ -16,7 +55,7 @@ async function cargarVentasRecientes() {
             <td>${v.peso_lb} lb</td>
             <td>$${Number(v.precio_lb).toLocaleString()}</td>
             <td>$${Number(v.total).toLocaleString()}</td>
-            <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : 'Contado'}</td>
+            <td>${v.es_fiado ? '<span class="badge badge-pendiente">Fiado</span>' : '<span class="badge badge-pagado">Contado</span>'}</td>
             <td>
                 <div class="acciones-tabla">
                     <button type="button" class="btn-editar" onclick='abrirModalEditar(${v.id}, ${v.cliente_id}, ${v.peso_lb}, ${v.precio_lb}, "${v.fecha}")'>Editar</button>
@@ -47,9 +86,7 @@ function formatearFechaInput(fechaISO) {
 
 function abrirModalEditar(id, clienteId, peso, precio, fecha) {
     editandoId = id;
-    const selectEdit = document.getElementById('edit-cliente');
-    selectEdit.innerHTML = document.getElementById('select-cliente').innerHTML;
-    selectEdit.value = clienteId;
+    document.getElementById('edit-cliente').value = clienteId;
     document.getElementById('edit-fecha').value = formatearFechaInput(fecha);
 
     const esDirecto = Number(peso) === 1;
@@ -141,19 +178,25 @@ document.querySelectorAll('input[name="modo-venta"]').forEach(radio => {
 document.getElementById('form-venta').addEventListener('submit', async (e) => {
     e.preventDefault();
     try {
+        const clienteId = document.getElementById('select-cliente').value;
+        if (!clienteId) {
+            mostrarAlerta('Selecciona un cliente de la lista.', 'error');
+            return;
+        }
+
         const modo = document.querySelector('input[name="modo-venta"]:checked').value;
         let datosVenta;
 
         if (modo === 'directo') {
             datosVenta = {
-                cliente_id: document.getElementById('select-cliente').value,
+                cliente_id: clienteId,
                 peso_lb: 1,
                 precio_lb: document.getElementById('input-precio-total').value,
                 es_fiado: document.getElementById('input-fiado').checked
             };
         } else {
             datosVenta = {
-                cliente_id: document.getElementById('select-cliente').value,
+                cliente_id: clienteId,
                 peso_lb: document.getElementById('input-peso').value,
                 precio_lb: document.getElementById('input-precio').value,
                 es_fiado: document.getElementById('input-fiado').checked
@@ -166,6 +209,7 @@ document.getElementById('form-venta').addEventListener('submit', async (e) => {
         document.getElementById('total-preview').textContent = '';
         document.getElementById('campos-libra').style.display = 'block';
         document.getElementById('campos-directo').style.display = 'none';
+        document.getElementById('lista-clientes').classList.remove('visible');
         cargarVentasRecientes();
     } catch (error) {
         mostrarAlerta(error.message, 'error');
